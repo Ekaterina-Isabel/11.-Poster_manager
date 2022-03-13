@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 
 public class Movie {        //элемент фильм
     private int id;
-    private int movieImageUrl;
+    private String movieImageUrl;
     private String movieName;
-    private int movieGenre;
+    private String movieGenre;
     private boolean premiereTomorrow;
 }
