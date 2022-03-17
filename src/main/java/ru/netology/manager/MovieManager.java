@@ -21,7 +21,7 @@ public class MovieManager {
 
     public MovieManager(int resultLength) {
         if (resultLength <= 0) {
-            resultLength = 10;
+            this.resultLength = 10;
         } else {
             this.resultLength = resultLength;
         }
@@ -53,7 +53,7 @@ public class MovieManager {
         return result;
     }
 
-    public Movie[] findLast() {
+    public Movie[] findLast() {     //вывод последние ... фильмов в обратном от добавления порядке
         int calculatedResultLength;
         if (movies.length < resultLength) {
             calculatedResultLength = movies.length;
