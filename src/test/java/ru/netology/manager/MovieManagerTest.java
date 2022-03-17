@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MovieManagerTest {
     Movie first = new Movie(1, "https://someURL.ru/1", "Бладшот", "боевик", false);
     Movie second = new Movie(2, "https://someURL.ru/2", "Вперед", "мультфильм", false);
-    Movie third = new Movie(3, "https://someURL.ru/3", "Отель БелградЭ", "комедия", false);
+    Movie third = new Movie(3, "https://someURL.ru/3", "Отель Белград", "комедия", false);
     Movie fourth = new Movie(4, "https://someURL.ru/4", "Джентльмены", "боевик", false);
     Movie fifth = new Movie(5, "https://someURL.ru/5", "Человек-невидимка", "ужасы", false);
     Movie sixth = new Movie(6, "https://someURL.ru/6", "Троллию Мировой тур", "мультфильм", true);
@@ -144,6 +144,19 @@ class MovieManagerTest {
         movieManager.addNewMovie(eleventh);
 
         Movie[] expected = {eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
+        Movie[] actual = movieManager.findLast();
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldFindLastMoviesForDefaultCountInReverseOrderIfAdd5() {     //найди последние фильмы в обратном порядке в количестве по дефолту (т.е. 10), если добавлены 5
+        movieManager.addNewMovie(first);
+        movieManager.addNewMovie(second);
+        movieManager.addNewMovie(third);
+        movieManager.addNewMovie(fourth);
+        movieManager.addNewMovie(fifth);
+
+        Movie[] expected = {fifth, fourth, third, second, first};
         Movie[] actual = movieManager.findLast();
         assertArrayEquals(expected, actual);
     }

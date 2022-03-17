@@ -5,7 +5,7 @@ import ru.netology.domain.Movie;
 public class MovieManager {
     private Movie[] movies = new Movie[0];      //movies - поле, в котором создан пустой массив
 
-    private int resultLength;
+    private int resultLength;       //желаемый размер создаваемого массива
 
     public int getResultLength() {
         return resultLength;
