@@ -2,6 +2,7 @@ package ru.netology.manager;
 
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Movie;
+import ru.netology.repository.MovieRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,11 +19,11 @@ class MovieManagerTest {
     Movie tenth = new Movie(10, "https://someURL.ru/10", "Джентльмены 1", "боевик", false);
     Movie eleventh = new Movie(11, "https://someURL.ru/11", "Человек-невидимка 1", "ужасы", false);
 
-    MovieManager movieManager = new MovieManager();     //создание пустого объекта
+    MovieManager movieManager = new MovieManager(new MovieRepository());     //создание пустого объекта
 
     @Test
     void shouldAddedToEmptyList() {     //добавь новый элемент в пустой список
-        movieManager.addNewMovie(first);        //тестируемое действие - сохрани первый элемент
+        movieManager.save(first);        //тестируемое действие - сохрани первый элемент
 
         Movie[] expected = {first};     //expected - ожидаемый результат, покажи запомненный элемент
         Movie[] actual = movieManager.getMovies();        //дай фильм, который ты запомнил
@@ -31,8 +32,8 @@ class MovieManagerTest {
 
     @Test
     void shouldAddIfAlreadyContains() {     //добавь новый элемент к уже имеющимся
-        movieManager.addNewMovie(first);
-        movieManager.addNewMovie(second);
+        movieManager.save(first);
+        movieManager.save(second);
 
         Movie[] expected = {first, second};
         Movie[] actual = movieManager.findAll();
@@ -41,17 +42,17 @@ class MovieManagerTest {
 
     @Test
     void shouldFindAllMovies() {        //покажи все фильмы
-        movieManager.addNewMovie(first);
-        movieManager.addNewMovie(second);
-        movieManager.addNewMovie(third);
-        movieManager.addNewMovie(fourth);
-        movieManager.addNewMovie(fifth);
-        movieManager.addNewMovie(sixth);
-        movieManager.addNewMovie(seventh);
-        movieManager.addNewMovie(eighth);
-        movieManager.addNewMovie(ninth);
-        movieManager.addNewMovie(tenth);
-        movieManager.addNewMovie(eleventh);
+        movieManager.save(first);
+        movieManager.save(second);
+        movieManager.save(third);
+        movieManager.save(fourth);
+        movieManager.save(fifth);
+        movieManager.save(sixth);
+        movieManager.save(seventh);
+        movieManager.save(eighth);
+        movieManager.save(ninth);
+        movieManager.save(tenth);
+        movieManager.save(eleventh);
 
         Movie[] expected = {first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh};
         Movie[] actual = movieManager.findAll();
@@ -60,17 +61,17 @@ class MovieManagerTest {
 
     @Test
     void shouldFindLastMoviesForDefaultCountInReverseOrder() {     //найди последние фильмы в обратном порядке в количестве по дефолту (т.е. 10)
-        movieManager.addNewMovie(first);
-        movieManager.addNewMovie(second);
-        movieManager.addNewMovie(third);
-        movieManager.addNewMovie(fourth);
-        movieManager.addNewMovie(fifth);
-        movieManager.addNewMovie(sixth);
-        movieManager.addNewMovie(seventh);
-        movieManager.addNewMovie(eighth);
-        movieManager.addNewMovie(ninth);
-        movieManager.addNewMovie(tenth);
-        movieManager.addNewMovie(eleventh);
+        movieManager.save(first);
+        movieManager.save(second);
+        movieManager.save(third);
+        movieManager.save(fourth);
+        movieManager.save(fifth);
+        movieManager.save(sixth);
+        movieManager.save(seventh);
+        movieManager.save(eighth);
+        movieManager.save(ninth);
+        movieManager.save(tenth);
+        movieManager.save(eleventh);
 
         Movie[] expected = {eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
         Movie[] actual = movieManager.findLast();
@@ -87,19 +88,19 @@ class MovieManagerTest {
 
     @Test
     void shouldFindLast5MoviesInReverseOrder() {     //найди последние 5 фильмов в обратном порядке
-        MovieManager movieManager = new MovieManager(5);
+        MovieManager movieManager = new MovieManager(new MovieRepository(),5);
 
-        movieManager.addNewMovie(first);
-        movieManager.addNewMovie(second);
-        movieManager.addNewMovie(third);
-        movieManager.addNewMovie(fourth);
-        movieManager.addNewMovie(fifth);
-        movieManager.addNewMovie(sixth);
-        movieManager.addNewMovie(seventh);
-        movieManager.addNewMovie(eighth);
-        movieManager.addNewMovie(ninth);
-        movieManager.addNewMovie(tenth);
-        movieManager.addNewMovie(eleventh);
+        movieManager.save(first);
+        movieManager.save(second);
+        movieManager.save(third);
+        movieManager.save(fourth);
+        movieManager.save(fifth);
+        movieManager.save(sixth);
+        movieManager.save(seventh);
+        movieManager.save(eighth);
+        movieManager.save(ninth);
+        movieManager.save(tenth);
+        movieManager.save(eleventh);
 
         Movie[] expected = {eleventh, tenth, ninth, eighth, seventh};
         Movie[] actual = movieManager.findLast();
@@ -108,19 +109,19 @@ class MovieManagerTest {
 
     @Test
     void shouldFindLastMoviesForDefaultCountInReverseOrderIfQuantityIs0() {     //найди последние фильмы в обратном порядке в количестве по дефолту (т.е. 10), если в конструктор передается 0
-        MovieManager movieManager = new MovieManager(0);
+        MovieManager movieManager = new MovieManager(new MovieRepository(),0);
 
-        movieManager.addNewMovie(first);
-        movieManager.addNewMovie(second);
-        movieManager.addNewMovie(third);
-        movieManager.addNewMovie(fourth);
-        movieManager.addNewMovie(fifth);
-        movieManager.addNewMovie(sixth);
-        movieManager.addNewMovie(seventh);
-        movieManager.addNewMovie(eighth);
-        movieManager.addNewMovie(ninth);
-        movieManager.addNewMovie(tenth);
-        movieManager.addNewMovie(eleventh);
+        movieManager.save(first);
+        movieManager.save(second);
+        movieManager.save(third);
+        movieManager.save(fourth);
+        movieManager.save(fifth);
+        movieManager.save(sixth);
+        movieManager.save(seventh);
+        movieManager.save(eighth);
+        movieManager.save(ninth);
+        movieManager.save(tenth);
+        movieManager.save(eleventh);
 
         Movie[] expected = {eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
         Movie[] actual = movieManager.findLast();
@@ -129,19 +130,19 @@ class MovieManagerTest {
 
     @Test
     void shouldFindLastMoviesForDefaultCountInReverseOrderIfQuantityIsLessThen0() {     //найди последние фильмы в обратном порядке в количестве по дефолту (т.е. 10), если в конструктор передается меньше 0
-        MovieManager movieManager = new MovieManager(-1);
+        MovieManager movieManager = new MovieManager(new MovieRepository(), -1);
 
-        movieManager.addNewMovie(first);
-        movieManager.addNewMovie(second);
-        movieManager.addNewMovie(third);
-        movieManager.addNewMovie(fourth);
-        movieManager.addNewMovie(fifth);
-        movieManager.addNewMovie(sixth);
-        movieManager.addNewMovie(seventh);
-        movieManager.addNewMovie(eighth);
-        movieManager.addNewMovie(ninth);
-        movieManager.addNewMovie(tenth);
-        movieManager.addNewMovie(eleventh);
+        movieManager.save(first);
+        movieManager.save(second);
+        movieManager.save(third);
+        movieManager.save(fourth);
+        movieManager.save(fifth);
+        movieManager.save(sixth);
+        movieManager.save(seventh);
+        movieManager.save(eighth);
+        movieManager.save(ninth);
+        movieManager.save(tenth);
+        movieManager.save(eleventh);
 
         Movie[] expected = {eleventh, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
         Movie[] actual = movieManager.findLast();
@@ -150,11 +151,11 @@ class MovieManagerTest {
 
     @Test
     void shouldFindLastMoviesForDefaultCountInReverseOrderIfAdd5() {     //найди последние фильмы в обратном порядке в количестве по дефолту (т.е. 10), если добавлены 5
-        movieManager.addNewMovie(first);
-        movieManager.addNewMovie(second);
-        movieManager.addNewMovie(third);
-        movieManager.addNewMovie(fourth);
-        movieManager.addNewMovie(fifth);
+        movieManager.save(first);
+        movieManager.save(second);
+        movieManager.save(third);
+        movieManager.save(fourth);
+        movieManager.save(fifth);
 
         Movie[] expected = {fifth, fourth, third, second, first};
         Movie[] actual = movieManager.findLast();
