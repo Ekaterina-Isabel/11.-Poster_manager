@@ -38,9 +38,8 @@ public class MovieManager {
 
     public Movie[] findAll() {      //вывод всех фильмов в порядке добавления
         Movie[] result = new Movie[movies.length];
-        for (int i = 0; i < result.length; i++) {       // перебираем массив в прямом порядке, но кладем в результаты в обратном
-            result[i] = movies[i];
-        }
+        // перебираем массив в прямом порядке, но кладем в результаты в обратном
+        System.arraycopy(movies, 0, result, 0, result.length);
         return result;
     }
 
@@ -63,9 +62,7 @@ public class MovieManager {
 
         Movie[] result = new Movie[calculatedResultLength];
         Movie[] allMovie = revertMovies();
-        for (int i = 0; i < calculatedResultLength; i++) {
-            result[i] = allMovie[i];
-        }
+        System.arraycopy(allMovie, 0, result, 0, calculatedResultLength);
         return result;
     }
 }
