@@ -1,12 +1,33 @@
 package ru.netology.manager;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import ru.netology.domain.Movie;
 import ru.netology.repository.MovieRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class MovieManagerTest {
+    //@Mock
+    private MovieRepository repository = Mockito.mock(MovieRepository.class);       //команда Mockito создать фейковый репозиторий
+    //@InjectMocks
+    private MovieManager manager = new MovieManager(repository);
+    private MovieManager manager5 = new MovieManager(repository, 5);     //создание пустого объекта
+
+    private Movie firstMock = new Movie(1,"https://someURL.ru/1", "Бладшот", "боевик", false);
+    private Movie secondMock = new Movie(2, "https://someURL.ru/2", "Вперед", "мультфильм", false);
+    private Movie thirdMock = new Movie(3, "https://someURL.ru/3", "Отель Белград", "комедия", false);
+    private Movie fourthMock = new Movie(4, "https://someURL.ru/4", "Джентльмены", "боевик", false);
+    private Movie fifthMock = new Movie(5, "https://someURL.ru/5", "Человек-невидимка", "ужасы", false);
+    private Movie sixthMock = new Movie(6, "https://someURL.ru/6", "Троллию Мировой тур", "мультфильм", true);
+    private Movie seventhMock = new Movie(7, "https://someURL.ru/7", "Номер один", "комедия", true);
+    private Movie eighthMock = new Movie(8, "https://someURL.ru/8", "Бладшот 1", "боевик", false);
+    private Movie ninthMock = new Movie(9, "https://someURL.ru/9", "Вперед 1", "мультфильм", false);
+    private Movie tenthMock = new Movie(10, "https://someURL.ru/10", "Джентльмены 1", "боевик", false);
+    private Movie eleventhMock = new Movie(11, "https://someURL.ru/11", "Человек-невидимка 1", "ужасы", false);
+
+
     Movie first = new Movie(1, "https://someURL.ru/1", "Бладшот", "боевик", false);
     Movie second = new Movie(2, "https://someURL.ru/2", "Вперед", "мультфильм", false);
     Movie third = new Movie(3, "https://someURL.ru/3", "Отель Белград", "комедия", false);
@@ -14,12 +35,37 @@ class MovieManagerTest {
     Movie fifth = new Movie(5, "https://someURL.ru/5", "Человек-невидимка", "ужасы", false);
     Movie sixth = new Movie(6, "https://someURL.ru/6", "Троллию Мировой тур", "мультфильм", true);
     Movie seventh = new Movie(7, "https://someURL.ru/7", "Номер один", "комедия", true);
-    Movie eighth = new Movie(8, "https://someURL.ru/8", "Бладшо 1т", "боевик", false);
+    Movie eighth = new Movie(8, "https://someURL.ru/8", "Бладшот 1", "боевик", false);
     Movie ninth = new Movie(9, "https://someURL.ru/9", "Вперед 1", "мультфильм", false);
     Movie tenth = new Movie(10, "https://someURL.ru/10", "Джентльмены 1", "боевик", false);
     Movie eleventh = new Movie(11, "https://someURL.ru/11", "Человек-невидимка 1", "ужасы", false);
 
     MovieManager movieManager = new MovieManager(new MovieRepository());     //создание пустого объекта
+
+
+    //тесты с Mockito
+    @Test
+    public void shouldFindAllMoviesMockito() {        //покажи все фильмы, тест с Mockito
+        //настройка заглушки
+        Movie[] returned = { firstMock, secondMock, thirdMock };        //подготовка: репозиторий уже помнит три фильма
+        doReturn(returned).when(repository).findAll();       //возвращай этот массив, когда тебя спросят findAll
+
+        Movie[] expected = {firstMock, secondMock, thirdMock };
+        Movie[] actual = manager.findAll();
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindLast5MoviesInReverseOrderMockito() {     //найди последние 5 фильмов в обратном порядке, тест с Mockito
+        //настройка заглушки
+        Movie[] returned = { sixthMock, seventhMock, eighthMock, ninthMock, tenthMock, eleventhMock };        //подготовка: репозиторий уже помнит 5 фильмов
+        doReturn(returned).when(repository).findAll();       //возвращай этот массив, когда тебя спросят findLast
+
+
+        Movie[] expected = { eleventhMock, tenthMock, ninthMock, eighthMock, seventhMock };
+        Movie[] actual = manager5.findLast();
+        assertArrayEquals(expected, actual);
+    }
 
     @Test
     void shouldAddedToEmptyList() {     //добавь новый элемент в пустой список
