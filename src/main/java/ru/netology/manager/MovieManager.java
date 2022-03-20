@@ -17,10 +17,10 @@ public class MovieManager {
         return movies;
     }
 
-    public MovieManager(MovieRepository repository) {
+    public MovieManager(MovieRepository repository) {       //конструктор
         this.repository = repository;
         resultLength = 10;
-    }       //конструктор
+    }
 
     public MovieManager(MovieRepository repository, int resultLength) {     //конструктор
         this.repository = repository;
@@ -31,23 +31,23 @@ public class MovieManager {
         }
     }
 
-    public Movie[] findAll() {
+    public Movie[] findAll() {      //вывод всех фильмов в порядке добавления
         return repository.findAll();
     }
 
-    public void save(Movie movie) {        //команда менеджеру добавить элемент в корзину - репозиторий запомни новый элемент
+    public void save(Movie movie) {        //команда менеджеру добавить фильм в ленту - репозиторий запомни новый фильм
         repository.save(movie);
     }
 
-    public Movie findById(int id) {
+    public Movie findById(int id) {         //возвращает фильм по id (либо null, если такого объекта нет)
         return repository.findById(id);
     }
 
-    public void removeById(int id) {
+    public void removeById(int id) {        //принимает id и удаляет объект по id (если объекта нет, то пусть будет исключение, как на лекции)
         repository.removeById(id);
     }
 
-    public void removeAll() {
+    public void removeAll() {       //полностью вычищает репозиторий (для удаления всех элементов достаточно в поле items положить пустой массив)
         repository.removeAll();
     }
 
